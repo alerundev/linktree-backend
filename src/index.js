@@ -37,8 +37,14 @@ async function migrate() {
       ip TEXT,
       user_agent TEXT,
       referer TEXT,
+      country TEXT,
+      city TEXT,
+      country_code TEXT,
       visited_at TIMESTAMPTZ DEFAULT NOW()
     );
+    ALTER TABLE page_views ADD COLUMN IF NOT EXISTS country TEXT;
+    ALTER TABLE page_views ADD COLUMN IF NOT EXISTS city TEXT;
+    ALTER TABLE page_views ADD COLUMN IF NOT EXISTS country_code TEXT;
     CREATE TABLE IF NOT EXISTS link_clicks (
       id SERIAL PRIMARY KEY,
       link_id TEXT NOT NULL,
